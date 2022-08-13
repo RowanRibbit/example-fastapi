@@ -1,0 +1,16 @@
+-- select * from posts left join "user" on posts.user_id = "user".id
+-- left join - selects from left table, compares with right table and if match create new row.
+-- select * from posts right join "user" on posts.user_id = "user".id
+-- right join will show instances of things on RHS table, but on on the left; left does this under the hood
+-- select "user".id, "user".email, COUNT(*) from posts RIGHT JOIN "user" on posts.user_id = "user".id group by "user".id
+-- COUNT(*) counts null entries
+-- select "user".id, "user".email, COUNT(posts.id) as user_post_count from posts RIGHT JOIN "user" on posts.user_id = "user".id group by "user".id
+
+-- votes and posts
+-- select * from posts left join votes on posts.id = votes.post_id
+-- prints a row for ever row in the votes table, left join shows null on RHS
+-- select * from posts right join votes on posts.id = votes.post_id
+select posts.*, COUNT(votes.post_id) as votes from posts left join votes on posts.id = votes.post_id group by posts.id
+-- Count on a specific column of the votes table to count the number of votes
+
+-- query for a specific post
