@@ -58,3 +58,23 @@ app.add_middleware(
 # Git - first define a gitignore file for files and folders you don't want checked in like .env, venv/, __pycache__
 # not uploading venv means you don't upload packages, need to inform other users about packages and dependencies which we would need
 # pip freeze > requirements.txt creates a txt file of packages to install, pip install -r requirements.txt
+# https://youtu.be/0sOvCWFmrtA?t=41570
+# git config --glbal user.email/name 'x'
+# git commit -m 'name'
+# echo "# example-fastapi" >> README.md
+# git init
+# git add README.md
+# git commit -m "first commit"
+# git branch -M main
+# git remote add origin https://github.com/RowanRibbit/example-fastapi.git
+# git push -u origin main
+
+# Now deploy the application; First is Heroku
+# heroku login
+# heroku create {APP-name} - I forgot to add the name
+# heroku adds a branch heroku to our github
+# git push heroku main
+# heroku doesn't know to run app.main:app like we do with uvicorn
+# create Procfile in the root dir
+# web: uvicorm app.main:app --host=0.0.0.0 --port=${PORT:-5000}
+# have to provide the host IP, and the port flag to run on. Don't provide reload as this should be in production. We don't know the port, but will be passed as an Env var, so take any env var PORT as assign it, with a default value of 5000
