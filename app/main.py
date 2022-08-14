@@ -59,7 +59,7 @@ app.add_middleware(
 # not uploading venv means you don't upload packages, need to inform other users about packages and dependencies which we would need
 # pip freeze > requirements.txt creates a txt file of packages to install, pip install -r requirements.txt
 # https://youtu.be/0sOvCWFmrtA?t=41570
-# git config --glbal user.email/name 'x'
+# git config --global user.email/name 'x'
 # git commit -m 'name'
 # echo "# example-fastapi" >> README.md
 # git init
@@ -78,3 +78,13 @@ app.add_middleware(
 # create Procfile in the root dir
 # web: uvicorm app.main:app --host=0.0.0.0 --port=${PORT:-5000}
 # have to provide the host IP, and the port flag to run on. Don't provide reload as this should be in production. We don't know the port, but will be passed as an Env var, so take any env var PORT as assign it, with a default value of 5000
+# issue with our environment variables - in dev we used the .env file but in production we didn't check .env into Git
+# need to configure a Postgres DB on heroku, then add the env vars
+
+# Heroku Postgres
+# heroku addons:create heroku-postgresql:hobby-dev
+# go to the App Dashboard and save the details
+# go to settings>Config Vars to set Env Vars
+# restart the heroku instance
+# heroku ps:restart
+# heroku logs -t
