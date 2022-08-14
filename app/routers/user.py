@@ -43,7 +43,7 @@ def get_users(db: Session = Depends(get_db)):
     return user
 
 @router.put('/{id}', response_model=schemas.UserResponse)
-async def update_post(id: int, user: schemas.UserUpdate, db: Session=Depends(get_db)):
+async def update_user(id: int, user: schemas.UserUpdate, db: Session=Depends(get_db)):
     updated = db.query(models.User).filter(models.User.id == id)
 
     if not updated.first():
@@ -56,7 +56,7 @@ async def update_post(id: int, user: schemas.UserUpdate, db: Session=Depends(get
     return updated.first()
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def delete_post(id: int,db: Session=Depends(get_db)):
+async def delete_user(id: int,db: Session=Depends(get_db)):
     
     deleted = db.query(models.User).filter(models.User.id == id)
 

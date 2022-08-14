@@ -88,3 +88,7 @@ app.add_middleware(
 # restart the heroku instance
 # heroku ps:restart
 # heroku logs -t
+
+# However, now there are issues with the DB - SQL in the logs, some error with the SQL, deployed a new instance of postgres but we didn't initialise the DB
+# in dev environment used alembic to manage our DB, and to keep it up to date ran alembic upgrade head
+# on the instance, run alembic upgrade head in Heroku - can use heroku run 'alembic upgrade head'
