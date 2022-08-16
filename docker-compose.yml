@@ -1,0 +1,20 @@
+version: "3"
+# services are nothing more than containers; define a service for a container, 4 containers are 4 services
+services:
+  api:    
+    build: . # current directory
+    ports: # array of ports 
+        # - <port on localhost>:<port on container> if received on port on localhost, forward to port on container
+      - 4000:8000
+    # can point to env_file
+    # env_file:
+    #   - ./.env
+    environment:
+      - DATABASE_HOSTNAME=localhost
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=Postgres_098
+      - DATABASE_NAME=fastapi_db
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=52595a0a200c17539624b8dc5b8207226e99105498143a67194b4a5b3c02831a
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=120
