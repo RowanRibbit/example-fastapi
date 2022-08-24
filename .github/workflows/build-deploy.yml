@@ -1,4 +1,5 @@
 name: Build and Deploy Code
+
 on: [push, pull_request]
 
 # push, for multiple, [push, pull_request] on every branch, but what if you want specific branches?
@@ -10,11 +11,15 @@ on: [push, pull_request]
 # create a job, a set of steps that execute on the same runner 
 jobs:
   job1:
-    runs_on: ubuntu-latest
-    # provide a list of steps
+    runs-on: ubuntu-latest
     steps:
-      # provide a name and an action, github.com/marketplace/actions/checkout
       - name: pulling git repo
         uses: actions/checkout@v2
-      - name: say hello
-        run: echo "hello world"
+      - name: Install python
+        uses: actions/setup-python@v2
+        with: 
+          python-version: "3.10"
+      - name: update pip
+        run: python -m pip install --upgrade pip
+      - name: install dependencies
+        run: pip install -r requirements.txt
