@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Code
 on: [push, pull_request]
 
 # push, for multiple, [push, pull_request] on every branch, but what if you want specific branches?
@@ -17,4 +17,4 @@ jobs:
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: say hello
-        uses: echo 'hello world'
+        uses: echo "hello world"
