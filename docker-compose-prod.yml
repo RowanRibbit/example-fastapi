@@ -1,0 +1,39 @@
+version: "3"
+# services are nothing more than containers; define a service for a container, 4 containers are 4 services
+services:
+  api:    
+    # build: . # current directory
+    # don't want to build in the docker production env
+    image:
+      - rowanribbit/python_api
+    depends_on: # waits for postgres to start
+      - postgres
+    ports: # array of ports 
+        # - <port on localhost>:<port on container> if received on port on localhost, forward to port on container
+        # in prod want a different port than 8000
+      - 80:8000
+    # don't want the volume flag to bind them in prod
+    # in prod don't want reload
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    # can point to env_file
+    # env_file:
+    #   - ./.env
+    # in production want to reference env vars, do what we did in ubuntu setup to define env vars on the ubuntu machine hosting it using ${ENV_VAR}
+    environment:
+      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+
+  postgres:
+    image: postgres # will use prebuilt postgres image
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+  
+  volumes:
+    - postgres-db:

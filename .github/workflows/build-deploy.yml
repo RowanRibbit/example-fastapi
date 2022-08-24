@@ -1,0 +1,20 @@
+name: Build and Deploy
+on: [push, pull_request]
+
+# push, for multiple, [push, pull_request] on every branch, but what if you want specific branches?
+#   push: # define branches
+#     branches: ["main"]
+#   pull_request:
+#     branches: ["main"]
+
+# create a job, a set of steps that execute on the same runner 
+jobs:
+  job1:
+    runs_on: ubuntu-latest
+    # provide a list of steps
+    steps:
+      # provide a name and an action, github.com/marketplace/actions/checkout
+      - name: pulling git repo
+        uses: actions/checkout@v2
+      - name: say hello
+        uses: echo 'hello world'

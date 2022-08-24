@@ -252,3 +252,36 @@ app.add_middleware(
 # 'docker compose up -d', creates container name {dir}_{servicename}_{#}
 # can check logs - docker logs {name}
 # pass in env vars in yml
+# docker compose down, then 'docker compose up -d' again, won't remake it if you've composed before, but docker build will force a rebuild if the image already exists
+
+# Set up DB for the container
+# to save data from a container need to save data from it as a volume to maintain the DB data
+# https://youtu.be/0sOvCWFmrtA?t=50083su 
+# ideally want the postgres container to start first - add depends_on flag to the api container, will start postgres first and stop the api first respectively when you docker-compose up -d
+
+# Making containerised changes
+# If you make changes and send it get the same response - docker ps to see the containers
+# 'docker exec -it fast_api bash' (execute a container, but override the comman to bash)
+# in the linux file system, if you go to app and check for the changes you'll see they haven't been sync'd from docker compose up previously. To get around this - sync the app folder in local to the container using volumes in docker-compose
+# bind mount should sync the changes with our local dir and container, but if you look at the docker container the cmd in the Dockerfile it lacks the --reload flag to reload on changes. That said, don't want that in production: add a command flag to the docker-compose flag with the reload code
+
+# Setting up a repo on DockerHub
+# Make an account > create a repo
+# Now we have a repo, docker image ls shows the python_api_api image which we can upload with 'docker push'
+# docker push {name_of_image}, will prompt to login but will get access denied
+# have to name an imagine with a specific convention - docker push {account_name}/{dir}
+# docker image tag to rename image 'docker image tag {og_image} {account}/{folder_name}
+# docker image ls will show it in the docker file system
+# now docker push will successfully push it to the repo
+
+# Now we have a clone of our dev env, but using it in production isn't ideal as it has env vars and the reload flag, will be differences in Dev and Prod
+# docker-compose down
+# copy the docker-compose file, rename to docker-compose-dev and docker-compose-prod respectively
+# starting up docker-compose is different now as we don't use the default docker-compose file, user 'docker-compose -f docker-compose-dev.yml up -d' or prod respectively
+# docker-compose -f docker-compose-dev.yml down similarly to up
+
+# Automated Testing
+# Pytest
+# Create tests inside 'tests' dir in root, then __init__.py and 'test_demo.py' in tests dir, pip install pytest
+
+# FastAPI also has its own TestClient (Import TestClient), use it the same way you use a requests object from the Python library
