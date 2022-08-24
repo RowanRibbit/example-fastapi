@@ -12,9 +12,9 @@ def test_vote_on_post(authorized_client, create_test_posts, create_test_second_u
     assert res.status_code == 201
 
 # def test_vote_twice_post(authorized_client, create_test_posts, create_test_vote):
-#     # need a post with a vote, create a fixture
-#     res = authorized_client.post('/vote/', json={"post_id": create_test_posts[1].id, "dir": 1})
-#     assert res.status_code == 409
+    # # need a post with a vote, create a fixture
+    # res = authorized_client.post('/vote/', json={"post_id": # create_test_posts[1].id, "dir": 1})
+    # assert res.status_code == 409
 
 # things that care about prexisting votes fail on post despite working in postman
 

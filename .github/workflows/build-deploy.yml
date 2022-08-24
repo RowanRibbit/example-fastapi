@@ -17,4 +17,4 @@ jobs:
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: say hello
-        uses: echo "hello world"
+        run: echo "hello world"
