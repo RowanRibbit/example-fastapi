@@ -10,16 +10,18 @@ on: [push, pull_request]
 
 # create a job, a set of steps that execute on the same runner 
 jobs:
-  job1:
-    env:
-      DATABASE_HOSTNAME: localhost
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: Postgres_098
-      DATABASE_NAME: fastapi_db
-      DATABASE_USERNAME: postgres
-      SECRET_KEY: 52595a0a200c17539624b8dc5b8207226e99105498143a67194b4a5b3c02831a
-      ALGORITHM: HS256
-      ACCESS_TOKEN_EXPIRE_MINUTES: 120
+  job1: 
+    environment:
+      name: DATABASE_HOSTNAME # oops   
+    env:       
+      DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}       
+      DATABASE_PORT: ${{secrets.DATABASE_PORT}}       
+      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}       
+      DATABASE_NAME: ${{secrets.DATABASE_NAME}}       
+      DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}       
+      SECRET_KEY: ${{secrets.SECRET_KEY}}       
+      ALGORITHM: ${{secrets.ALGORITHM}}       
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
@@ -37,3 +39,5 @@ jobs:
           pip install pytest
           pytest
 # will fail at the moment, no Environment Vars
+# now we've added env: we'll not get Env Var errors, but will need to set up DB on runner or point it towards an external DB
+# Similarly want to store them as secrets, not in the code: go to action secrets on github
