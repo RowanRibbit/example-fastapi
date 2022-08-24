@@ -1,4 +1,4 @@
-from asyncio.windows_events import NULL
+
 from typing import List
 from app import schemas
 import pytest
@@ -44,7 +44,7 @@ def test_get_post_by_id(authorized_client, create_test_posts):
     ('new title 1', 'new content 1', True),
     ('new title 2', 'new content 2', False),
     ('Pizza', 'Pizza is Nice', True),
-    ('Test Defalt', 'Test Create Post Defaul Published', NULL)
+    ('Test Defalt', 'Test Create Post Defaul Published', None)
 ])
 def test_create_post(authorized_client, create_test_user, create_test_posts, title, content, published):
     res = authorized_client.post('/posts/', json={"title": title, "content": content, "published": published})
@@ -58,7 +58,7 @@ def test_create_post(authorized_client, create_test_user, create_test_posts, tit
 
 @pytest.mark.parametrize("title, content, published", [
     ('new title 1', 'new content 1', True),
-    ('Test Defalt', 'Test Create Post Defaul Published', NULL)
+    ('Test Defalt', 'Test Create Post Defaul Published', None)
 ])
 def test_unauthorized_create_post(client, create_test_user, create_test_posts, title, content, published):
     res = client.post('/posts/', json={"title": title, "content": content, "published": published})
