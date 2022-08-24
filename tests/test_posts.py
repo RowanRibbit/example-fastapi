@@ -43,8 +43,7 @@ def test_get_post_by_id(authorized_client, create_test_posts):
 @pytest.mark.parametrize("title, content, published", [
     ('new title 1', 'new content 1', True),
     ('new title 2', 'new content 2', False),
-    ('Pizza', 'Pizza is Nice', True),
-    ('Test Defalt', 'Test Create Post Defaul Published', None)
+    ('Pizza', 'Pizza is Nice', True)
 ])
 def test_create_post(authorized_client, create_test_user, create_test_posts, title, content, published):
     res = authorized_client.post('/posts/', json={"title": title, "content": content, "published": published})
