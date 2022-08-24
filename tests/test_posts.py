@@ -56,8 +56,7 @@ def test_create_post(authorized_client, create_test_user, create_test_posts, tit
         assert created_post.published == False
 
 @pytest.mark.parametrize("title, content, published", [
-    ('new title 1', 'new content 1', True),
-    ('Test Defalt', 'Test Create Post Defaul Published', None)
+    ('new title 1', 'new content 1', True)
 ])
 def test_unauthorized_create_post(client, create_test_user, create_test_posts, title, content, published):
     res = client.post('/posts/', json={"title": title, "content": content, "published": published})
