@@ -54,6 +54,40 @@ jobs:
         run: |
           pip install pytest
           pytest
+          
+    steps:
+    - name: Check Out Repo
+      uses: actions/checkout@v2
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and Push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./ # path to the context of the Dockerfile
+        file: ./Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi_dockerhub:tagname
+        cache-from: type=local/src=/tml/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
+    - name: Image Digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
 # will fail at the moment, no Environment Vars
 # now we've added env: we'll not get Env Var errors, but will need to set up DB on runner or point it towards an external DB
 # Similarly want to store them as secrets, not in the code: go to action secrets on github
+# Docker https://youtu.be/0sOvCWFmrtA?t=66250
+
+'''
+  docs.docker.com
+  get our access token from docker account settings > security > new access token
+  Select Github Actions, then create and copy the access token
+  Want to create a secret for User Name and Acccess Token for DOCKER_HUB_USERNAME and DOCKER_HUB_ACCESS_TOKEN
+  Go to Set Up CI/CD, Configure GitHub actions
+'''
+  
