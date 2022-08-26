@@ -10,7 +10,7 @@ on: [push, pull_request]
 
 # create a job, a set of steps that execute on the same runner 
 jobs:
-  job1: 
+  build: 
     environment:
       name: DATABASE_HOSTNAME # oops   
     env:       
@@ -75,6 +75,30 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Image Digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+        # CI is complete, now implement CD part of the pipeline
+
+  deploy: # problem with jobs is jobs run in parallel, don't want to run build and deploy in parallel
+    environment:
+      name: Production
+    runs-on: ubuntu-latest
+    needs: [build] # needs to wait for [list of jobs]
+    steps:
+      # pull github repo
+      # install heroku cli
+      # heroku login
+      # add git remote for heroku
+      # git push heroku main
+      # could do this manually, or look for an action in github marketplace, 'Deploy to Heroku'
+      # heroku account > API Key, create in actions
+      - name: pulling git repo
+        uses: actions/checkout@v2
+      - name: Deploying to Heroku  
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+
 # will fail at the moment, no Environment Vars
 # now we've added env: we'll not get Env Var errors, but will need to set up DB on runner or point it towards an external DB
 # Similarly want to store them as secrets, not in the code: go to action secrets on github
