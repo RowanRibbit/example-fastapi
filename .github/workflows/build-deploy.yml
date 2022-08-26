@@ -54,7 +54,7 @@ jobs:
         run: |
           pip install pytest
           pytest
-          
+
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
@@ -83,11 +83,11 @@ jobs:
 # Similarly want to store them as secrets, not in the code: go to action secrets on github
 # Docker https://youtu.be/0sOvCWFmrtA?t=66250
 
-'''
-  docs.docker.com
-  get our access token from docker account settings > security > new access token
-  Select Github Actions, then create and copy the access token
-  Want to create a secret for User Name and Acccess Token for DOCKER_HUB_USERNAME and DOCKER_HUB_ACCESS_TOKEN
-  Go to Set Up CI/CD, Configure GitHub actions
-'''
+
+# docs.docker.com
+# get our access token from docker account settings > security > new access token
+# Select Github Actions, then create and copy the access token
+# Want to create a secret for User Name and Acccess Token for DOCKER_HUB_USERNAME and DOCKER_HUB_ACCESS_TOKEN
+# Go to Set Up CI/CD, Configure GitHub actions
+
   
